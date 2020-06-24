@@ -31,11 +31,14 @@ public class HangMan extends Application {
         Text txtReplay = new Text("To continue the game, press ENTER");
 
         ArrayList<Shape> bodyParts = new ArrayList<>();
+        // Creating WordBank
         String[] words = { "write", "program", "that", "receive", "positive",
                 "excellent", "linger", "violin", "strange", "holiday", "twilight",
                 "school", "teacher", "tutor", "mother", "code", "laptop", "repository",
                 "dentist", "chocolate"};
+        // Randomly choose the correct word from the bank
         String answer = words[rdm.nextInt(words.length)];
+        // Creating arraylists for displayed answer, and correct and incorrect guesses
         ArrayList<Character>  answerArr = new ArrayList<>();
         ArrayList<Character> guesses = new ArrayList<>();
         ArrayList<Character> misses = new ArrayList<>();
@@ -43,7 +46,8 @@ public class HangMan extends Application {
         for (Character c : answer.toCharArray()) {
             answerArr.add(c);
         }
-
+        
+        // Setting up the display for the gallow
         Arc base = new Arc(150,420,50,20,0,180);
         base.setFill(Color.TRANSPARENT);
         base.setStroke(Color.BLACK);
@@ -52,7 +56,8 @@ public class HangMan extends Application {
         pane.getChildren().add(base);
         pane.getChildren().add(post);
         pane.getChildren().add(beam);
-
+        
+        // Creating display for the person
         bodyParts.add(new Line(225,200,225,230));
         Circle head = new Circle(225,245,20);
         head.setFill(Color.WHITE);
@@ -64,6 +69,7 @@ public class HangMan extends Application {
         bodyParts.add(new Line(225,325,260,355));
         bodyParts.add(new Line(225,325,190,355));
 
+        // Making displays for the word and guesses
         txtGuess.setX(225);
         txtGuess.setY(400);
         txtOver.setX(225);
@@ -91,6 +97,7 @@ public class HangMan extends Application {
         pane.getChildren().add(txtCorrectGuess);
         pane.getChildren().add(txtMissedLetters);
 
+        // Action for guessing letters
         pane.setOnKeyPressed(e -> {
             if (!bodyParts.isEmpty() && !misses.contains(Character.toLowerCase(e.getCode().getName().charAt(0)))
                     && !guesses.contains(Character.toLowerCase(e.getCode().getName().charAt(0))) && e.getCode().isLetterKey()) {
@@ -128,7 +135,7 @@ public class HangMan extends Application {
                         }
                     });
                 }
-
+                // If the user makes 7 incorrect guesses, remove letters from the screen and begin swing animation
                 if (misses.size() == 7) {
                     pane.getChildren().remove(txtGuess);
                     pane.getChildren().add(txtOver);
